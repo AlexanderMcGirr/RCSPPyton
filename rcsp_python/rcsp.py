@@ -1,4 +1,4 @@
-import rcsp_python.graph
+import rcsp_python.defaultclasses
 import queue
 
 # Algorithm is based off Boost RCSP
@@ -33,7 +33,7 @@ def rcsp(g, source, terminal):
     label_number = 1
     numberOfIterations = 0
     
-    first_label = rcsp_python.graph.Label(resVert=source, resVector=[0,0])
+    first_label = rcsp_python.defaultclasses.Label(resVert=source, resVector=[0,0])
     current_label = None
     new_label = None
     
