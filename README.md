@@ -12,7 +12,7 @@ Ordered by: standard name
 
 | ncalls | tottime | percall | cumtime | percall | filename:lineno(function) |
 | -------| ------- | ------- | ------- | ------- | ------------------------- |
-| 1  |  0.000  |  0.000   | 0.001   | 0.001 | <string>:1(<module>) |
+| 1  |  0.000  |  0.000   | 0.001   | 0.001 | \<string\>:1(<module>) |
 | 3   | 0.000  |  0.000 |   0.000 |   0.000 | RCSPTW.py:10(labelDomination) |
 | 9 |   0.000  |  0.000  |  0.000 |   0.000 |RCSPTW.py:61(specREF) |
 | 10 |    0.000  |  0.000 |   0.000 |   0.000| defaultclasses.py:10(__init__) |
