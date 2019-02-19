@@ -89,7 +89,6 @@ if __name__ == '__main__':
     G.addEdge(E, A, [1,5], specREF)
     G.addEdge(E, B, [1,4], specREF)
     
-    
     solutions = rcsp_python.rcsp(G, A , E)
     rcsp_python.printRCSP(solutions)
 

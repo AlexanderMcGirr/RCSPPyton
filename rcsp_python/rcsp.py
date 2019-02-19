@@ -74,7 +74,7 @@ def rcsp(g, source, terminal):
         
         numberOfIterations +=1
      
-    print("Number of Iterations: {}".format(numberOfIterations))  
+    #print("Number of Iterations: {}".format(numberOfIterations))  
     return terminal.labelList
 
 def printRCSP(labelList):
