@@ -4,6 +4,9 @@ class Vertex():
         self.resVec = resVec
         self.labelList = []
     
+    def deleteVertexLabel(self,label):
+        self.labelList.remove(label)
+    
     # Override default equal comparison operator so we do not add two of the same
     # vertices to the list.
     def __eq__(self, other):
@@ -62,4 +65,12 @@ class Graph():
         if potentialEdge not in self.edgeList:
             self.edgeList.append(potentialEdge)
             self.edgeDict[outVert.name].append(potentialEdge)
-            self.numberEdges += 1           
+            self.numberEdges += 1
+            
+    def purgeDominatedLabels(self, vertex):
+        # See https://stackoverflow.com/questions/1207406/how-to-remove-items-from-a-list-while-iterating
+        # Cannot remove an item from list while iterating over it in the above for loop
+        vertex.labelList[:] = [label for label in vertex.labelList if not (label.isDominated and label.isProcessed)]
+    
+    def getAdjacencyList(self,vertex):
+        return self.edgeDict[vertex.name]

@@ -4,6 +4,7 @@
 # Shortest Path Problem
 if __name__ == '__main__':
     import rcsp_python
+    import collections
     
     def labelDomination(firstLabel, secondLabel):
         if firstLabel.resourceVector[0] <= secondLabel.resourceVector[0]:
@@ -17,11 +18,12 @@ if __name__ == '__main__':
         newCost = label.resourceVector[0] + edge.resourceCosts[0]
         newTime = label.resourceVector[1] + edge.resourceCosts[1] 
         
-        newResVec = [newCost, newTime]        
+        newResVec = [newCost, newTime]    
         feasible = True
         
-        return (feasible, rcsp_python.Label(edge.inVertex, 
-                                         edge, label, newResVec, labelNum))
+        NamedLabel = collections.namedtuple('NewLabel', 'feasibility label')
+        
+        return NamedLabel(feasible,rcsp_python.Label(edge.inVertex,edge, label, newResVec, labelNum) )
     
     
     G = rcsp_python.Graph(2, labelDomination)     
@@ -46,3 +48,7 @@ if __name__ == '__main__':
     
     solutions = rcsp_python.rcsp(G, A , E)
     rcsp_python.printRCSP(solutions)
+    
+# Output:
+# Path:ACDE
+# Accumulated Costs: [5, 16]

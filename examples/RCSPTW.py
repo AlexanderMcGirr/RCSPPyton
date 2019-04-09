@@ -4,6 +4,7 @@
 # Resource constrained shortest path problem with Time Windows example
 if __name__ == '__main__':
     import rcsp_python
+    import collections
     
     # Domination function
     def labelDomination(firstLabel :rcsp_python.Label, secondLabel :rcsp_python.Label):
@@ -73,8 +74,9 @@ if __name__ == '__main__':
         if newTime <= edge.inVertex.resVec[1]:
             feasible = True
         
-        return (feasible, rcsp_python.Label(edge.inVertex, 
-                                         edge, label, newResVec, labelNum))
+        NamedLabel = collections.namedtuple('NewLabel', 'feasibility label')
+        
+        return NamedLabel( feasible, rcsp_python.Label(edge.inVertex, edge, label, newResVec, labelNum) )
     
     
     # Add edges with the cost and time cost of each edge

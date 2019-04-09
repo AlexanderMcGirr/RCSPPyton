@@ -30,51 +30,50 @@ def rcsp(g, source, terminal):
     
     Both these functions are defined by the user, so it can be very flexible.
     '''
-    label_number = 1
+    labelNumber = 1
     numberOfIterations = 0
     
-    first_label = rcsp_python.defaultclasses.Label(resVert=source, resVector=[0,0])
-    current_label = None
-    new_label = None
+    firstLabel = rcsp_python.defaultclasses.Label(resVert=source, resVector=[0,0])
+    currentLabel = None
+    newLabel = None
     
-    unprocessed_labels = queue.PriorityQueue()
-    unprocessed_labels.put(first_label)
+    unprocessedLabels = queue.PriorityQueue()
+    unprocessedLabels.put(firstLabel)
     
-    while not unprocessed_labels.empty():
-        current_label = unprocessed_labels.get()
-        if(not current_label.isDominated):
-            resident_vertex = current_label.residentVertex
-            for vertexLabel in resident_vertex.labelList:
+    while not unprocessedLabels.empty():
+        currentLabel = unprocessedLabels.get()
+        labelVertex = currentLabel.residentVertex
+        if(not currentLabel.isDominated):            
+            for vertexLabel in labelVertex.labelList:
                 # labelDom will return the label that IS DOMINATED.
                 # This function is also defined in the Graph class
                 labelDom = None
-                if current_label != vertexLabel:
-                    labelDom = g.labelDomination(current_label, vertexLabel)
+                if currentLabel != vertexLabel:
+                    labelDom = g.labelDomination(currentLabel, vertexLabel)
                 if (labelDom is not None):
                     labelDom.isDominated = True
             
-            # See https://stackoverflow.com/questions/1207406/how-to-remove-items-from-a-list-while-iterating
-            # Cannot remove an item from list while iterating over it in the above for loop
-            resident_vertex.labelList[:] = [lbl for lbl in resident_vertex.labelList 
-                                            if not (lbl.isDominated and lbl.isProcessed)]
+            
+            g.purgeDominatedLabels(labelVertex)
         
-        if(not current_label.isDominated):
-            current_label.isProcessed = True
-            for forwardStar in g.edgeDict[current_label.residentVertex.name]:
-                new_label = forwardStar.specREF(forwardStar, current_label, label_number)
-                if new_label[0]:
-                    unprocessed_labels.put(new_label[1])
-                    forwardStar.inVertex.labelList.append(new_label[1])
-                    label_number += 1
+        if(not currentLabel.isDominated):
+            currentLabel.isProcessed = True
+            for forwardStar in g.getAdjacencyList(labelVertex):
+                # newLabel should return a named tuple with fields: feasibility, label
+                newLabel = forwardStar.specREF(forwardStar, currentLabel, labelNumber)
+                if newLabel.feasibility:
+                    unprocessedLabels.put(newLabel.label)
+                    forwardStar.inVertex.labelList.append(newLabel.label)
+                    labelNumber += 1
             
         
         # Remove this label from its respective labelList because it is dominated
         else:
-            current_label.residentVertex.labelList.remove(current_label)
+            currentLabel.residentVertex.labelList.remove(currentLabel)
         
         numberOfIterations +=1
      
-    #print("Number of Iterations: {}".format(numberOfIterations))  
+    #print("Number of Iterations: {}".format(numberOfIterations))
     return terminal.labelList
 
 def printRCSP(labelList):
