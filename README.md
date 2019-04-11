@@ -1,5 +1,5 @@
 # rcsp-python
-This implementation of the resource constrained shortest path algorithm allows each edge to have a different resource extension function. Whether the results are optimal cannot be detected by algorithm (may be implemented in the future). This algorithm may run slowly if each edge does have a different function due to functions being quite large objects.
+This implementation of the resource constrained shortest path algorithm allows each edge to have a different resource extension function. The algorithm itself relies on named tuples for determining label feasibility and returning the label.
 
 # Todo
 * Parallelize the domination step
